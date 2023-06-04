@@ -178,7 +178,7 @@ class PengirimanController extends Controller
     public function destroy(Pengiriman $pengiriman)
     {
         $pengiriman->delete();
-        return redirect("peng$pengiriman")->with("message", "Data berhasil dihapus");
+        return redirect("pengiriman")->with("message", "Data berhasil dihapus");
     }
 
     public function print()

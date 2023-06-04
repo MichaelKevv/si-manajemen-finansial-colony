@@ -44,11 +44,11 @@
                         </div>
                         <div class="form-group">
                             <label for="latitude" class="form-control-label">Latitude</label>
-                            <input class="form-control" type="text" name="latitude" id="latitude" value="{{ $outler }}">
+                            <input class="form-control" type="text" name="latitude" id="latitude" value="{{ $outlet->latitude }}">
                         </div>
                         <div class="form-group">
                             <label for="longitude" class="form-control-label">Longitude</label>
-                            <input class="form-control" type="text" name="longitude" id="longitude" value="{{ $outler }}">
+                            <input class="form-control" type="text" name="longitude" id="longitude" value="{{ $outlet->longitude }}">
                         </div>
                         <button class="btn btn-primary" type="submit">Simpan Data</button>
                     </form>
