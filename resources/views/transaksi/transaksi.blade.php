@@ -8,12 +8,14 @@
         </button>
     </div>
     <?php endif ?>
+    <?php if (Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3): ?>
     <a href="{{ route('transaksi.create') }}">
         <button class="btn btn-primary" type="button">Tambah Data</button>
     </a>
     <a target="_blank" href="{{ url('print-transaksi') }}">
         <button class="btn btn-success" type="button">Cetak PDF</button>
     </a>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-12">
@@ -72,13 +74,17 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->jumlah_barang }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->total_harga + $pgw->ongkos_kirim }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $pgw->total_harga + $pgw->ongkos_kirim }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_transaksi) }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ tanggal_local($pgw->tgl_transaksi) }}</p>
                                         </td>
+                                        <?php if (Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3): ?>
                                         <td class="align-middle">
-                                            <form action="{{ route('transaksi.destroy', $pgw->id_transaksi) }}" method="POST">
+                                            <form action="{{ route('transaksi.destroy', $pgw->id_transaksi) }}"
+                                                method="POST">
                                                 <a href="{{ route('transaksi.show', $pgw->id_transaksi) }}"
                                                     class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
                                                     data-original-title="Edit user">
@@ -98,8 +104,19 @@
                                                 <button class="btn btn-danger" type="submit">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
-
                                             </form>
+                                        </td>
+
+
+                                        <?php endif; ?>
+                                        <td class="align-middle">
+                                            <a href="{{ route('transaksi.show', $pgw->id_transaksi) }}"
+                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                                data-original-title="Edit user">
+                                                <button class="btn btn-info" type="button">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

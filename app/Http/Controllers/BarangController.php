@@ -26,7 +26,8 @@ class BarangController extends Controller
             // $barang = Barang::latest()->paginate(10);
             $barang = Barang::join('gudang', 'gudang.id_gudang', '=', 'barang.id_gudang')
                 ->join('kategori_barang', 'kategori_barang.id_kategori_barang', '=', 'barang.id_kategori_barang')
-                ->select('barang.*', 'gudang.nama as nama_gudang', 'kategori_barang.nama as nama_kategori')
+                ->join('stok_barang', 'stok_barang.id_barang', '=', 'barang.id_barang')
+                ->select('barang.*', 'stok_barang.*', 'gudang.nama as nama_gudang', 'kategori_barang.nama as nama_kategori')
                 ->paginate(10);
             return view('barang/barang', compact('barang'))->with('i', (request()->input('page', 1) - 1) * 5);
         }

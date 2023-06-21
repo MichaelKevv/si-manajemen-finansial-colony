@@ -1,7 +1,7 @@
 @extends('template')
 @section('content')
     <div class="row">
-        <?php if(Session::get('pegawai')->role == 1): ?>
+        <?php if(Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3) : ?>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
@@ -30,7 +30,6 @@
 
             </div>
         </div>
-        <?php endif;?>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
@@ -86,6 +85,8 @@
 
             </div>
         </div>
+        <?php endif;?>
+        <?php if(Session::get('pegawai')->role == 4): ?>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
@@ -113,7 +114,10 @@
                 </div>
             </div>
         </div>
+        <?php endif;?>
+
     </div>
+    <?php if(Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3) :?>
     <div class="row mt-4">
         <div class="col-lg-5 mb-lg-0 mb-4">
             <div class="card z-index-2">
@@ -319,6 +323,7 @@
         </div>
 
     </div>
+    <?php endif; ?>
 @endsection
 @push('custom-scripts')
     <script>

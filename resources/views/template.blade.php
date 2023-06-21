@@ -464,6 +464,92 @@
         </div>
 
     </aside>
+    <?php elseif(Session::get('pegawai')->role == 4): ?>
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
+            <a class="navbar-brand m-0" href="{{ url('dashboard') }}">
+                <img src="{{ url('assets/img/logo-ct-dark.png') }}" class="navbar-brand-img h-100" alt="main_logo">
+                <span class="ms-1 font-weight-bold">SI Manajemen Colony</span>
+            </a>
+        </div>
+        <hr class="horizontal dark mt-0">
+        <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Main</h6>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}"
+                        href="{{ url('dashboard') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fa fa-dashboard {{ request()->is('dashboard') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#pagesExamples"
+                        class="nav-link {{ request()->is('kategori*') || request()->is('barang*') || request()->is('stok*') ? 'active' : '' }}"
+                        aria-controls="pagesExamples" role="button" aria-expanded="false">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i
+                                class="fas fa-box {{ request()->is('kategori*') || request()->is('barang*') || request()->is('stok*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Barang</span>
+                    </a>
+                    <div class="collapse {{ request()->is('kategori*') || request()->is('barang*') || request()->is('stok*') ? 'show' : '' }}"
+                        id="pagesExamples">
+                        <ul class="nav ms-4 ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('barang*') ? 'active' : '' }}"
+                                    href="{{ url('barang') }}">
+                                    <span class="nav-link-text ms-1">Barang</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('transaksi*') ? 'active' : '' }}"
+                        href="{{ url('transaksi') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-exchange-alt {{ request()->is('transaksi*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Transaksi</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link {{ request()->is('profile*') ? 'active' : '' }}"
+                        href="{{ url('profile') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-id-card {{ request()->is('profile*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile</span>
+                    </a>
+                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('password*') ? 'active' : '' }}"
+                        href="{{ url('password') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-key {{ request()->is('password*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Ganti Password</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
     <?php endif?>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -554,28 +640,8 @@
                         <div class="col-lg-6 mb-lg-0 mb-4">
                             <div class="copyright text-center text-sm text-muted text-lg-start">
                                 © 2023,
-                                made with <i class="fa fa-heart"></i> by Michael Kevin Adinata
+                                made with <i class="fa fa-heart"></i> by MKA
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com" class="nav-link text-muted"
-                                        target="_blank">Creative Tim</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
-                                        target="_blank">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
-                                        target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                        target="_blank">License</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

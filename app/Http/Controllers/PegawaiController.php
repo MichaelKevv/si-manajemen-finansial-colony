@@ -165,7 +165,7 @@ class PegawaiController extends Controller
      */
     public function destroy(Pegawai $pegawai)
     {
-        $pegawai->delete();
+        $pegawai->delete(); 
         return redirect("pegawai")->with("message", "Data berhasil dihapus");
     }
 

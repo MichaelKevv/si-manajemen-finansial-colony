@@ -8,12 +8,15 @@
         </button>
     </div>
     <?php endif ?>
+
+    <?php if (Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3): ?>
     <a href="{{ route('barang.create') }}">
         <button class="btn btn-primary" type="button">Tambah Data</button>
     </a>
     <a target="_blank" href="{{ url('print-barang') }}">
         <button class="btn btn-success" type="button">Cetak PDF</button>
     </a>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-12">
@@ -36,6 +39,9 @@
                                         Gudang
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Stok
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Harga
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -53,7 +59,6 @@
                                     <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Action
                                     </th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,23 +74,30 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->nama_gudang }}</p>
                                         </td>
                                         <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->jumlah_stok }}
+                                                {{ $pgw->satuan }}</p>
+                                        </td>
+                                        <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->harga }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_masuk) }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_masuk) }}
+                                            </p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_keluar) }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_keluar) }}
+                                            </p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->status }}</p>
                                         </td>
                                         <td>
                                             <div>
-                                                <img src="{{ url('storage/foto-barang/' . $pgw->foto) }}"
-                                                    class="me-3" width="200px">
+                                                <img src="{{ url('storage/foto-barang/' . $pgw->foto) }}" class="me-3"
+                                                    width="100px">
                                             </div>
                                         </td>
+                                        <?php if (Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3): ?>
                                         <td class="align-middle">
                                             <form action="{{ route('barang.destroy', $pgw->id_barang) }}" method="POST">
                                                 <a href="{{ route('barang.edit', $pgw->id_barang) }}"
@@ -103,6 +115,18 @@
 
                                             </form>
                                         </td>
+                                        <?php endif;?>
+                                        <?php if (Session::get('pegawai')->role == 4): ?>
+                                        <td class="align-middle">
+                                            <a href="{{ route('transaksi.transaksiuser', $pgw->id_barang) }}"
+                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                                data-original-title="Edit user">
+                                                <button class="btn btn-info" type="button">
+                                                    {{-- <i class="fas fa-plus"></i> --}} Beli
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <?php endif;?>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -64,3 +64,4 @@ Route::resource('mutasi', MutasiController::class);
 Route::resource('pengiriman', PengirimanController::class);
 Route::resource('supplier', SupplierController::class);
 Route::resource('transaksi', TransaksiController::class);
+Route::get('transaksi/transaksi-user/{id}', [TransaksiController::class, 'transaksiUser'])->name('transaksi.transaksiuser');
