@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Jun 2023 pada 11.59
+-- Waktu pembuatan: 22 Jun 2023 pada 12.11
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
@@ -97,6 +97,33 @@ INSERT INTO `kategori_barang` (`id_kategori_barang`, `nama`, `deskripsi`, `creat
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `konsumen`
+--
+
+CREATE TABLE `konsumen` (
+  `id_konsumen` char(36) NOT NULL,
+  `id_pengguna` char(36) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `no_hp` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `konsumen`
+--
+
+INSERT INTO `konsumen` (`id_konsumen`, `id_pengguna`, `nama`, `alamat`, `no_hp`, `email`, `username`, `password`, `foto`, `created_at`, `updated_at`) VALUES
+('9978740e-2d69-4fe5-ab4d-497ee4aa895b', '99764f27-8177-4e99-b466-08f0dd0765e7', 'Kevin', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', '085790291176', 'syahrulhidayat342@gmail.com', 'user', '202cb962ac59075b964b07152d234b70', 'WbCb7JS0iaOrG28GDDuULnhxm9GvgOzcgbakZtyA.jpg', '2023-06-22 09:30:22', '2023-06-22 09:58:17');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `mutasi_stok`
 --
 
@@ -162,8 +189,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_pengguna`, `nama`, `alamat`, `no_hp`, `email`, `username`, `password`, `foto`, `created_at`, `updated_at`) VALUES
-('9953b04a-fd32-4174-b67e-1c248c24389a', 'e1f6b957-e1a0-11ed-baf9-e4e7493b7607', 'Kevin', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', '085790291176', 'syahrulhidayat342@gmail.com', 'kevin', 'd2e7a2105d0fb461fe6f2858cc33942f', 'TOinChVvllgOxLOmwAN0QnbeZ2HPAbjKsfH2zi4R.jpg', '2023-06-04 02:53:10', '2023-06-04 02:53:10'),
-('99764f7b-b0f8-4eed-98e9-77766bf72163', '99764f27-8177-4e99-b466-08f0dd0765e7', 'User 1', 'Malang', '098765456786', 'user@gmail.com', 'user', '827ccb0eea8a706c4c34a16891f84e7b', 'RiGzpZlIxqboiSo35e5K2teAKg5m17sgTyKQmTDu.jpg', '2023-06-21 07:56:26', '2023-06-21 07:56:26');
+('9953b04a-fd32-4174-b67e-1c248c24389a', 'e1f6b957-e1a0-11ed-baf9-e4e7493b7607', 'Kevin', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', '085790291176', 'syahrulhidayat342@gmail.com', 'kevin', 'd2e7a2105d0fb461fe6f2858cc33942f', 'TOinChVvllgOxLOmwAN0QnbeZ2HPAbjKsfH2zi4R.jpg', '2023-06-04 02:53:10', '2023-06-04 02:53:10');
 
 -- --------------------------------------------------------
 
@@ -184,8 +210,9 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama`, `role`, `created_at`, `updated_at`) VALUES
+('17f951c5-10e1-11ee-b09f-e4e7493b7607', 'Kasir', 2, NULL, NULL),
 ('9961d498-5cbb-4654-b912-94c58f6b3b83', 'Kurir', 3, '2023-06-11 03:36:16', '2023-06-11 03:36:16'),
-('99764f27-8177-4e99-b466-08f0dd0765e7', 'User', 4, '2023-06-21 07:55:31', '2023-06-21 07:55:31'),
+('99764f27-8177-4e99-b466-08f0dd0765e7', 'Konsumen', 4, '2023-06-21 07:55:31', '2023-06-21 07:55:31'),
 ('e1f6b957-e1a0-11ed-baf9-e4e7493b7607', 'Admin', 1, '2023-04-23 06:33:52', '2023-04-23 06:35:42');
 
 -- --------------------------------------------------------
@@ -315,6 +342,13 @@ ALTER TABLE `kategori_barang`
   ADD PRIMARY KEY (`id_kategori_barang`);
 
 --
+-- Indeks untuk tabel `konsumen`
+--
+ALTER TABLE `konsumen`
+  ADD PRIMARY KEY (`id_konsumen`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
+
+--
 -- Indeks untuk tabel `mutasi_stok`
 --
 ALTER TABLE `mutasi_stok`
@@ -400,6 +434,12 @@ ALTER TABLE `transaksi`
 ALTER TABLE `barang`
   ADD CONSTRAINT `barang_ibfk_2` FOREIGN KEY (`id_gudang`) REFERENCES `gudang` (`id_gudang`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `barang_ibfk_3` FOREIGN KEY (`id_kategori_barang`) REFERENCES `kategori_barang` (`id_kategori_barang`);
+
+--
+-- Ketidakleluasaan untuk tabel `konsumen`
+--
+ALTER TABLE `konsumen`
+  ADD CONSTRAINT `konsumen_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`);
 
 --
 -- Ketidakleluasaan untuk tabel `mutasi_stok`
