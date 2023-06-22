@@ -61,6 +61,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->is('konsumen*') ? 'active' : '' }}" href="{{ url('konsumen') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user {{ request()->is('konsumen*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Konsumen</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->is('pengguna*') ? 'active' : '' }}" href="{{ url('pengguna') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -538,11 +547,11 @@
                     </a>
                 </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('password*') ? 'active' : '' }}"
-                        href="{{ url('password') }}">
+                    <a class="nav-link {{ request()->is('password-konsumen*') ? 'active' : '' }}"
+                        href="{{ url('password-konsumen') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-key {{ request()->is('password*') ? '' : 'text-dark' }}"></i>
+                            <i class="fas fa-key {{ request()->is('password-konsumen*') ? '' : 'text-dark' }}"></i>
                         </div>
                         <span class="nav-link-text ms-1">Ganti Password</span>
                     </a>
@@ -603,6 +612,7 @@
                             <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
                                 aria-labelledby="dropdownMenuButton">
                                 <li class="mb-2">
+                                    <?php if(Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3): ?>
                                     <a class="dropdown-item border-radius-md" href="{{ url('/logout') }}">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
@@ -615,6 +625,20 @@
                                             </div>
                                         </div>
                                     </a>
+                                    <?php elseif(Session::get('pegawai')->role == 4): ?>
+                                    <a class="dropdown-item border-radius-md" href="{{ url('logout-konsumen') }}">
+                                        <div class="d-flex py-1">
+                                            <div class="my-auto">
+                                                <i class="fas fa-sign-out-alt cursor-pointer me-3"></i>
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="text-sm font-weight-normal mb-1">
+                                                    <span class="font-weight-bold">Logout</span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <?php endif; ?>
                                 </li>
                             </ul>
                         </li>
@@ -640,7 +664,7 @@
                         <div class="col-lg-6 mb-lg-0 mb-4">
                             <div class="copyright text-center text-sm text-muted text-lg-start">
                                 © 2023,
-                                made with <i class="fa fa-heart"></i> by MKA
+                                made with <i class="fa fa-heart"></i> by Me
                             </div>
                         </div>
                     </div>

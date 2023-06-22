@@ -16,7 +16,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (!Session::get('logged_in_pegawai')) {
+        if (!Session::get('pegawai')) {
             return redirect('login')->with('info', 'Kamu harus login dulu');
         } else {
             $data['pegawai'] = Pegawai::count();

@@ -20,7 +20,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        if (!Session::get('logged_in_pegawai')) {
+        if (!Session::get('pegawai')) {
             return redirect('login')->with('info', 'Kamu harus login dulu');
         } else {
             $transaksi = Transaksi::join('outlet', 'outlet.id_outlet', '=', 'transaksi.id_outlet')
@@ -40,7 +40,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        if (!Session::get('logged_in_pegawai')) {
+        if (!Session::get('pegawai')) {
             return redirect('login')->with('info', 'Kamu harus login dulu');
         } else {
             $data["barang"] = Barang::all();
@@ -149,7 +149,7 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-        if (!Session::get('logged_in_pegawai')) {
+        if (!Session::get('pegawai')) {
             return redirect('login')->with('info', 'Kamu harus login dulu');
         } else {
             $data['transaksi'] = $transaksi;
@@ -294,8 +294,8 @@ class TransaksiController extends Controller
         $outlet = Outlet::all();
         $pegawai = Pegawai::join('pengguna', 'pengguna.id_pengguna', '=', 'pegawai.id_pengguna')
             ->where('role', '!=', 4)
+            ->select('pegawai.*', 'pengguna.role', 'pengguna.nama as nama_role')
             ->get();
-
         // echo $barang; die;
         return view('transaksi.transaksi-user', compact('barang', 'pegawai', 'outlet'));
     }

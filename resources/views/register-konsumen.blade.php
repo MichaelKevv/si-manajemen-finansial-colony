@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ url('assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ url('assets/img/favicon.png') }}">
     <title>
-        SI Manajemen Finansial Colony | Login
+        SI Manajemen Finansial Colony | Register
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -32,10 +32,10 @@
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     <h3 class="font-weight-bolder text-info text-gradient">Selamat Datang</h3>
-                                    <p class="mb-0">Silakan masukkan username dan password anda</p>
+                                    <p class="mb-0">Silakan isi form untuk mendapatkan akun anda</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" action="{{ url('check_login') }}" method="post">
+                                    <form role="form" action="{{ url('register') }}" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <?php if (Session::has("message")): ?>
                                         <div class="alert text-white alert-danger alert-dismissible fade show"
@@ -56,6 +56,28 @@
                                             </button>
                                         </div>
                                         <?php endif ?>
+                                        <label>Nama</label>
+                                        <div class="mb-3">
+                                            <input type="text" name="nama" class="form-control" placeholder="Nama"
+                                                aria-label="nama" aria-describedby="nama-addon">
+                                        </div>
+                                        <label>Alamat</label>
+                                        <div class="mb-3">
+                                            <input type="text" name="alamat" class="form-control"
+                                                placeholder="Alamat" aria-label="alamat"
+                                                aria-describedby="alamat-addon">
+                                        </div>
+                                        <label>Nomor HP</label>
+                                        <div class="mb-3">
+                                            <input type="text" name="no_hp" class="form-control"
+                                                placeholder="Nomor HP" aria-label="no_hp"
+                                                aria-describedby="nomor-hp-addon">
+                                        </div>
+                                        <label>Email</label>
+                                        <div class="mb-3">
+                                            <input type="email" name="email" class="form-control"
+                                                placeholder="Email" aria-label="email" aria-describedby="email-addon">
+                                        </div>
                                         <label>Username</label>
                                         <div class="mb-3">
                                             <input type="text" name="username" class="form-control"
@@ -68,19 +90,26 @@
                                                 placeholder="Password" aria-label="Password"
                                                 aria-describedby="password-addon">
                                         </div>
+                                        <label>Foto</label>
+                                        <div class="mb-3">
+                                            <input type="file" name="image" id="image" class="form-control"
+                                                accept="image/*" />
+                                        </div>
+
                                         <div class="text-center">
                                             <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign
-                                                in</button>
+                                                up</button>
                                         </div>
                                     </form>
                                 </div>
-                                {{-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
-                                        Don't have an account?
-                                        <a href="javascript:;" class="text-info text-gradient font-weight-bold">Sign
-                                            up</a>
+                                        Sudah Ada Akun?
+                                        <a href="{{ url('login-konsumen') }}"
+                                            class="text-info text-gradient font-weight-bold">Sign
+                                            in</a>
                                     </p>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">

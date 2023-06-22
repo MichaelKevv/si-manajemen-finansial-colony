@@ -19,7 +19,7 @@
                     <h6>Ganti Password</h6>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                    <form class="p-3" action="{{ url('change-password/' . Session::get('pegawai')->id_pegawai) }}"
+                    <form class="p-3" action="{{ url('change-password-konsumen/' . Session::get('pegawai')->id_konsumen) }}"
                         method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group">

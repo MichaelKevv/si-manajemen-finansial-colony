@@ -35,7 +35,7 @@
                                     <p class="mb-0">Silakan masukkan username dan password anda</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" action="{{ url('check_login') }}" method="post">
+                                    <form role="form" action="{{ url('check_login_konsumen') }}" method="post">
                                         {{ csrf_field() }}
                                         <?php if (Session::has("message")): ?>
                                         <div class="alert text-white alert-danger alert-dismissible fade show"
@@ -74,13 +74,13 @@
                                         </div>
                                     </form>
                                 </div>
-                                {{-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
-                                        Don't have an account?
-                                        <a href="javascript:;" class="text-info text-gradient font-weight-bold">Sign
+                                        Tidak Ada Akun?
+                                        <a href="{{ url('register-konsumen') }}" class="text-info text-gradient font-weight-bold">Sign
                                             up</a>
                                     </p>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">

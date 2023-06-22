@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tujuan" class="form-control-label">Tujuan</label>
-                            <input class="form-control" type="text" name="tujuan" id="tujuan">
+                            <input class="form-control" type="text" value="{{ Session::get('pegawai')->alamat }}" name="tujuan" id="tujuan">
                         </div>
                         <div class="form-group">
                             <label for="jumlah_barang" class="form-control-label">Jumlah Barang</label>

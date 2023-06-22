@@ -20,7 +20,7 @@ class BarangController extends Controller
      */
     public function index()
     {
-        if (!Session::get('logged_in_pegawai')) {
+        if (!Session::get('pegawai')) {
             return redirect('login')->with('info', 'Kamu harus login dulu');
         } else {
             // $barang = Barang::latest()->paginate(10);
