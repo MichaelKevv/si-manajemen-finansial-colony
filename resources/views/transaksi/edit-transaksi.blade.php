@@ -34,6 +34,17 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="id_konsumen" class="form-control-label">Nama Konsumen</label>
+                            <select class="form-control" name="id_konsumen" id="id_konsumen" required>
+                                @foreach ($konsumen as $b)
+                                    <option {{ $b->id_konsumen == $transaksi->id_konsumen ? 'selected' : '' }}
+                                        value="{{ $b->id_konsumen }}">
+                                        {{ $b->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="id_outlet" class="form-control-label">Nama Outlet</label>
                             <select class="form-control" id="id_outlet" name="id_outlet">
                                 @foreach ($outlet as $o)
@@ -90,7 +101,8 @@
                         </div>
                         <div class="form-group">
                             <label for="status" class="form-control-label">Status</label>
-                            <input class="form-control" type="text" value="{{ $pengiriman->status }}" name="status" id="status">
+                            <input class="form-control" type="text" value="{{ $pengiriman->status }}" name="status"
+                                id="status">
                         </div>
                         <button class="btn btn-primary" type="submit">Simpan Data</button>
                     </form>

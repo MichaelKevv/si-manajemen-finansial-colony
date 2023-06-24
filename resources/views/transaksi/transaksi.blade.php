@@ -29,6 +29,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        ID Transaksi
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Nama Outlet
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -38,13 +41,25 @@
                                         Nama Pegawai
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Customer
+                                        Nama Konsumen - Alamat
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Jumlah Barang
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Total
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Ongkos Kirim
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Total Harga
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Status Transaksi
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Status Pengiriman
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Tanggal Transaksi
@@ -59,6 +74,9 @@
                                 @foreach ($transaksi as $pgw)
                                     <tr>
                                         <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->id_transaksi }}</p>
+                                        </td>
+                                        <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->nama_outlet }}</p>
                                         </td>
                                         <td>
@@ -67,15 +85,34 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->nama_pegawai }}</p>
                                         </td>
+                                        <?php if(Session::get('pegawai')->role == 4): ?>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->tujuan }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ Session::get('pegawai')->nama }} -
+                                                {{ $pgw->tujuan }}</p>
                                         </td>
+                                        <?php else: ?>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->nama_konsumen }} - {{ $pgw->tujuan }}</p>
+                                        </td>
+                                        <?php endif; ?>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->jumlah_barang }}</p>
                                         </td>
                                         <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->total_harga }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->ongkos_kirim }}</p>
+                                        </td>
+                                        <td>
                                             <p class="text-xs font-weight-bold mb-0">
                                                 {{ $pgw->total_harga + $pgw->ongkos_kirim }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->status_transaksi }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->status }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">
@@ -85,6 +122,10 @@
                                         <td class="align-middle">
                                             <form action="{{ route('transaksi.destroy', $pgw->id_transaksi) }}"
                                                 method="POST">
+                                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-view-{{ $pgw->id_transaksi }}">
+                                                    Lihat Bukti Bayar
+                                                </button>
                                                 <a href="{{ route('transaksi.show', $pgw->id_transaksi) }}"
                                                     class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
                                                     data-original-title="Edit user">
@@ -99,6 +140,7 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 </a>
+
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger" type="submit">
@@ -106,9 +148,7 @@
                                                 </button>
                                             </form>
                                         </td>
-
-
-                                        <?php endif; ?>
+                                        <?php else: ?>
                                         <td class="align-middle">
                                             <a href="{{ route('transaksi.show', $pgw->id_transaksi) }}"
                                                 class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -118,7 +158,45 @@
                                                 </button>
                                             </a>
                                         </td>
+                                        <?php endif; ?>
                                     </tr>
+                                    <div class="modal fade" id="modal-view-{{ $pgw->id_transaksi }}" tabIndex="-1">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <form action="{{ url('validasi-bukti/' . $pgw->id_transaksi) }}"
+                                                method="POST">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Foto Bukti Bayar</h5>
+                                                        <button type="button" class="btn-close text-dark"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <?php if($pgw->bukti_bayar != null): ?>
+                                                        <img src="{{ url('storage/foto-bukti-bayar/' . $pgw->bukti_bayar) }}"
+                                                            class="img-fluid border-radius-lg" alt="user1">
+                                                        <?php else: ?>
+                                                        <p>Bukti Pembayaran Belum Diupload</p>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <?php if($pgw->status_code == 1): ?>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <?php else: ?>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit"
+                                                            class="btn bg-gradient-primary">Validasi</button>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

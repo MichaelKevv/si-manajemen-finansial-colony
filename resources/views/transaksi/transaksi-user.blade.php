@@ -22,16 +22,24 @@
                     <form class="p-3" action="{{ route('transaksi.store') }}" method="post"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        {{-- <div class="form-group">
-                            <label for="id_barang" class="form-control-label">Nama Barang</label>
-                            <select class="form-control" name="id_barang" id="id_barang" required>
-                                @foreach ($barang as $b)
-                                    <option value="{{ $b->id_barang }}">
-                                        {{ $b->nama }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div> --}}
+                        <input type="hidden" name="harga" id="harga" value="{{ $barang->harga }}">
+                        <input type="hidden" name="id_konsumen" id="id_konsumen"
+                            value="{{ Session::get('pegawai')->id_konsumen }}">
+                        <input type="hidden" name="id_barang" id="id_barang" value="{{ $barang->id_barang }}">
+                        <div class="form-group">
+                            <label for="tujuan" class="form-control-label">Nomor Order</label>
+                            <input class="form-control" type="text" name="no_order"
+                                value="#{{ $order != null ? $order->order_number + 1 : 1 }}" id="no_order" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="tujuan" class="form-control-label">Nama Barang</label>
+                            <input class="form-control" type="text" name="nama_barang" value="{{ $barang->nama }}"
+                                id="nama_barang" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah_barang" class="form-control-label">Jumlah Barang</label>
+                            <input class="form-control" type="number" name="jumlah_barang" id="jumlah_barang">
+                        </div>
 
                         <div class="form-group">
                             <label for="id_pegawai" class="form-control-label">Nama Pegawai</label>
@@ -42,12 +50,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-                        <input type="hidden" name="id_barang" id="id_barang" value="{{ $barang->id_barang }}">
-                        <div class="form-group">
-                            <label for="tujuan" class="form-control-label">Nama Barang</label>
-                            <input class="form-control" type="text" name="nama_barang" value="{{ $barang->nama }}"
-                                id="nama_barang" readonly>
                         </div>
                         <div class="form-group">
                             <label for="id_outlet" class="form-control-label">Nama Outlet</label>
@@ -60,12 +62,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="tujuan" class="form-control-label">Tujuan</label>
-                            <input class="form-control" type="text" value="{{ Session::get('pegawai')->alamat }}" name="tujuan" id="tujuan">
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlah_barang" class="form-control-label">Jumlah Barang</label>
-                            <input class="form-control" type="number" name="jumlah_barang" id="jumlah_barang">
+                            <label for="tujuan" class="form-control-label">Alamat</label>
+                            <input class="form-control" type="text" value="{{ Session::get('pegawai')->alamat }}"
+                                name="tujuan" id="tujuan">
                         </div>
                         <div class="form-group">
                             <label for="metode_bayar" class="form-control-label">Metode Bayar</label>
@@ -73,20 +72,8 @@
                                 <option value="" selected>
                                     Pilih Metode Pembayaran
                                 </option>
-                                <option value="Cash">
-                                    Cash
-                                </option>
                                 <option value="Transfer Bank">
                                     Transfer Bank
-                                </option>
-                                <option value="Gopay">
-                                    Gopay
-                                </option>
-                                <option value="Shopeepay">
-                                    Shopeepay
-                                </option>
-                                <option value="OVO">
-                                    OVO
                                 </option>
                             </select>
                             {{-- <input class="form-control" type="text" name="metode_bayar" id="metode_bayar"> --}}
@@ -111,12 +98,17 @@
                             <input class="form-control" type="number" name="ongkos_kirim" id="ongkos_kirim" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="total_harga" class="form-control-label">Total Harga</label>
+                            <input class="form-control" type="number" name="total_harga" id="total_harga" readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="keterangan" class="form-control-label">Keterangan</label>
                             <textarea class="form-control" type="text" name="keterangan" id="keterangan"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="tgl_transaksi" class="form-control-label">Tanggal Transaksi</label>
-                            <input class="form-control" type="date" name="tgl_transaksi" value="<?php echo date('Y-m-d'); ?>" id="tgl_transaksi">
+                            <input class="form-control" type="date" name="tgl_transaksi" value="<?php echo date('Y-m-d'); ?>"
+                                id="tgl_transaksi">
                         </div>
                         <button class="btn btn-primary" type="submit">Simpan Data</button>
                     </form>
@@ -133,6 +125,9 @@
             } else {
                 $('#ongkos_kirim').val(10000);
             }
+            let total_harga = (parseInt($('#jumlah_barang').val()) * parseInt($('#harga').val())) + parseInt($(
+                '#ongkos_kirim').val())
+            $('#total_harga').val(total_harga);
         });
     </script>
 @endpush

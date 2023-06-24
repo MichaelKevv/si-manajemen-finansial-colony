@@ -24,7 +24,8 @@
 <body class="g-sidenav-show  bg-gray-100">
     {{-- role 1 : Admin
     role 2 : Kasir
-    role 3 : Kurir --}}
+    role 3 : Kurir
+    role 4 : Konsumen --}}
     <?php if(Session::get('pegawai')->role == 1): ?>
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
         id="sidenav-main">
@@ -64,7 +65,7 @@
                     <a class="nav-link {{ request()->is('konsumen*') ? 'active' : '' }}" href="{{ url('konsumen') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-user {{ request()->is('konsumen*') ? '' : 'text-dark' }}"></i>
+                            <i class="fas fa-users {{ request()->is('konsumen*') ? '' : 'text-dark' }}"></i>
                         </div>
                         <span class="nav-link-text ms-1">Konsumen</span>
                     </a>
@@ -73,7 +74,7 @@
                     <a class="nav-link {{ request()->is('pengguna*') ? 'active' : '' }}" href="{{ url('pengguna') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-users {{ request()->is('pengguna*') ? '' : 'text-dark' }}"></i>
+                            <i class="fas fa-user {{ request()->is('pengguna*') ? '' : 'text-dark' }}"></i>
                         </div>
                         <span class="nav-link-text ms-1">Pengguna</span>
                     </a>
@@ -171,6 +172,15 @@
                             <i class="fas fa-exchange-alt {{ request()->is('transaksi*') ? '' : 'text-dark' }}"></i>
                         </div>
                         <span class="nav-link-text ms-1">Transaksi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('upbukti*') ? 'active' : '' }}" href="{{ url('upbukti') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-exchange-alt {{ request()->is('upbukti*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Upload Bukti Bayar</span>
                     </a>
                 </li>
                 <li class="nav-item mt-3">
@@ -531,6 +541,16 @@
                             <i class="fas fa-exchange-alt {{ request()->is('transaksi*') ? '' : 'text-dark' }}"></i>
                         </div>
                         <span class="nav-link-text ms-1">Transaksi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('upbukti*') ? 'active' : '' }}"
+                        href="{{ url('upbukti') }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-exchange-alt {{ request()->is('upbukti*') ? '' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Upload Bukti Bayar</span>
                     </a>
                 </li>
                 <li class="nav-item mt-3">

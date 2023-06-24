@@ -33,6 +33,16 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="id_konsumen" class="form-control-label">Nama Konsumen</label>
+                            <select class="form-control" name="id_konsumen" id="id_konsumen" required>
+                                @foreach ($konsumen as $b)
+                                    <option value="{{ $b->id_konsumen }}">
+                                        {{ $b->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="id_outlet" class="form-control-label">Nama Outlet</label>
                             <select class="form-control" id="id_outlet" name="id_outlet">
                                 @foreach ($outlet as $o)

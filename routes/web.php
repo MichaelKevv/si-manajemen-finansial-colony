@@ -15,6 +15,7 @@ use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TransaksiUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,4 +79,11 @@ Route::resource('mutasi', MutasiController::class);
 Route::resource('pengiriman', PengirimanController::class);
 Route::resource('supplier', SupplierController::class);
 Route::resource('transaksi', TransaksiController::class);
+
+// transaksi user
+Route::get('upbukti', [TransaksiController::class, 'upBukti']);
+Route::post('cari-transaksi', [TransaksiController::class, 'cariTrx']);
 Route::get('transaksi/transaksi-user/{id}', [TransaksiController::class, 'transaksiUser'])->name('transaksi.transaksiuser');
+Route::get('transaksi/upload-bukti/{id}', [TransaksiController::class, 'uploadBukti'])->name('transaksi.uploadbukti');
+Route::post('transaksi/store-bukti/{id}', [TransaksiController::class, 'storeBukti'])->name('transaksi.storebukti');
+Route::post('validasi-bukti/{id}', [TransaksiController::class, 'validasiBukti']);

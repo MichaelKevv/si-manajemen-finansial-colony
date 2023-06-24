@@ -11,5 +11,5 @@ class Transaksi extends Model
     use HasFactory, HasUuids;
     protected $table = "transaksi";
     protected $primaryKey = 'id_transaksi';
-    protected $fillable = ['id_outlet', 'id_pengiriman', 'id_barang', 'id_pegawai', 'order_number', 'jumlah_barang', 'total_harga', 'metode_bayar', 'keterangan', 'tgl_transaksi'];
+    protected $fillable = ['id_outlet', 'id_pengiriman', 'id_barang', 'id_pegawai', 'id_konsumen', 'order_number', 'jumlah_barang', 'total_harga', 'metode_bayar', 'keterangan', 'tgl_transaksi', 'status', 'status_code', 'bukti_bayar'];
 }

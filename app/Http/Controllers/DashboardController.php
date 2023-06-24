@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Gudang;
 use App\Models\Kategori;
+use App\Models\Konsumen;
 use App\Models\Outlet;
 use App\Models\Pegawai;
 use App\Models\Transaksi;
@@ -38,6 +39,8 @@ class DashboardController extends Controller
                 ->count();
             $data['kasir'] = Pegawai::join("pengguna", "pengguna.id_pengguna", "=", "pegawai.id_pengguna")
                 ->where('pengguna.nama', "=", "Kasir")
+                ->count();
+            $data['konsumen'] = Konsumen::join("pengguna", "pengguna.id_pengguna", "=", "konsumen.id_pengguna")
                 ->count();
             $trx = Transaksi::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
                 ->whereYear('created_at', date('Y'))

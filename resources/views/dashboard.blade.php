@@ -85,6 +85,34 @@
 
             </div>
         </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Konsumen</p>
+                                <h5 class="font-weight-bolder mb-0">
+                                    {{ $konsumen }}
+                                    {{-- <span class="text-success text-sm font-weight-bolder"></span> --}}
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-4 text-end mb-4">
+                            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                <i class="fas fa-users text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
+                            href="{{ url('konsumen') }}">
+                            Selengkapnya
+                            <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <?php endif;?>
         <?php if(Session::get('pegawai')->role == 4): ?>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -415,7 +443,7 @@
         gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
         gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
         new Chart(ctx2, {
-            type: "line",
+            type: "bar",
             data: {
                 labels: label_trx,
                 datasets: [{

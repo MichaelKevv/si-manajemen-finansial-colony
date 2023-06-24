@@ -6,7 +6,9 @@ use App\Models\Barang;
 use App\Models\Outlet;
 use App\Models\Pegawai;
 use App\Models\Pengiriman;
+use App\Models\Stok;
 use App\Models\Transaksi;
+use App\Models\Konsumen;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -23,13 +25,25 @@ class TransaksiController extends Controller
         if (!Session::get('pegawai')) {
             return redirect('login')->with('info', 'Kamu harus login dulu');
         } else {
-            $transaksi = Transaksi::join('outlet', 'outlet.id_outlet', '=', 'transaksi.id_outlet')
-                ->join('pengiriman', 'pengiriman.id_pengiriman', '=', 'transaksi.id_pengiriman')
-                ->join('barang', 'barang.id_barang', '=', 'transaksi.id_barang')
-                ->join('pegawai', 'pegawai.id_pegawai', '=', 'transaksi.id_pegawai')
-                ->select('transaksi.*', 'barang.nama as nama_barang', 'pegawai.nama as nama_pegawai', 'outlet.nama as nama_outlet', 'pengiriman.*')
-                ->paginate(10);
-            return view('transaksi/transaksi', compact('transaksi'))->with('i', (request()->input('page', 1) - 1) * 5);
+            if (Session::get('pegawai')->role == 4) {
+                $transaksi = Transaksi::join('outlet', 'outlet.id_outlet', '=', 'transaksi.id_outlet')
+                    ->join('pengiriman', 'pengiriman.id_pengiriman', '=', 'transaksi.id_pengiriman')
+                    ->join('barang', 'barang.id_barang', '=', 'transaksi.id_barang')
+                    ->join('pegawai', 'pegawai.id_pegawai', '=', 'transaksi.id_pegawai')
+                    ->select('transaksi.*', 'transaksi.status as status_transaksi', 'barang.nama as nama_barang', 'pegawai.nama as nama_pegawai', 'outlet.nama as nama_outlet', 'pengiriman.*')
+                    ->where('id_konsumen', Session::get('pegawai')->id_konsumen)
+                    ->paginate(10);
+                return view('transaksi/transaksi', compact('transaksi'))->with('i', (request()->input('page', 1) - 1) * 5);
+            } else {
+                $transaksi = Transaksi::join('outlet', 'outlet.id_outlet', '=', 'transaksi.id_outlet')
+                    ->join('pengiriman', 'pengiriman.id_pengiriman', '=', 'transaksi.id_pengiriman')
+                    ->join('barang', 'barang.id_barang', '=', 'transaksi.id_barang')
+                    ->join('pegawai', 'pegawai.id_pegawai', '=', 'transaksi.id_pegawai')
+                    ->join('konsumen', 'konsumen.id_konsumen', '=', 'transaksi.id_konsumen')
+                    ->select('transaksi.*', 'konsumen.nama as nama_konsumen', 'transaksi.status as status_transaksi', 'barang.nama as nama_barang', 'pegawai.nama as nama_pegawai', 'outlet.nama as nama_outlet', 'pengiriman.*')
+                    ->paginate(10);
+                return view('transaksi/transaksi', compact('transaksi'))->with('i', (request()->input('page', 1) - 1) * 5);
+            }
         }
     }
 
@@ -46,6 +60,7 @@ class TransaksiController extends Controller
             $data["barang"] = Barang::all();
             $data["outlet"] = Outlet::all();
             $data["pegawai"] = Pegawai::all();
+            $data["konsumen"] = Konsumen::all();
             return view('transaksi/tambah-transaksi', $data);
         }
     }
@@ -63,24 +78,24 @@ class TransaksiController extends Controller
                 'id_barang' => 'required',
                 'id_outlet' => 'required',
                 'id_pegawai' => 'required',
+                'id_konsumen' => 'required',
                 'tujuan' => 'required',
                 'jumlah_barang' => 'required',
                 'ongkos_kirim' => 'required',
                 'metode_bayar' => 'required',
                 'metode_pengiriman' => 'required',
-                'keterangan' => 'required',
             ]);
         } else {
             $request->validate([
                 'id_barang' => 'required',
                 'id_outlet' => 'required',
                 'id_pegawai' => 'required',
+                'id_konsumen' => 'required',
                 'tujuan' => 'required',
                 'jumlah_barang' => 'required',
                 'ongkos_kirim' => 'required',
                 'metode_bayar' => 'required',
                 'metode_pengiriman' => 'required',
-                'keterangan' => 'required',
                 'status' => 'required',
             ]);
         }
@@ -95,21 +110,28 @@ class TransaksiController extends Controller
                 'tujuan' => $request->tujuan,
                 'ongkos_kirim' => $request->ongkos_kirim,
                 'metode_pengiriman' => $request->metode_pengiriman,
-                'status' => 'Pengiriman',
+                'status' => '-',
                 'tgl_pengiriman' => $request->tgl_transaksi,
                 'tipe_pengiriman' => "Pengiriman Barang ke Customer",
             ]);
-            Transaksi::create([
+            $transaksi = Transaksi::create([
                 'id_barang' => $request->id_barang,
                 'id_outlet' => $request->id_outlet,
                 'id_pengiriman' => $pengiriman->id_pengiriman,
                 'id_pegawai' => $request->id_pegawai,
+                'id_konsumen' => $request->id_konsumen,
                 'jumlah_barang' => $request->jumlah_barang,
                 'total_harga' => $total,
                 'metode_bayar' => $request->metode_bayar,
                 'keterangan' => $request->keterangan,
                 'tgl_transaksi' => $request->tgl_transaksi,
+                'status' => 'Menunggu Bukti Bayar',
             ]);
+            $stok = Stok::where('id_barang', $request->id_barang)->first();
+            $stok->update([
+                "jumlah_stok" => $stok->jumlah_stok - $request->jumlah_barang,
+            ]);
+            return redirect("transaksi/upload-bukti/" . $transaksi->id_transaksi);
         } else {
             $barang = Barang::where('id_barang', '=', $request->id_barang)->first();
             $outlet = Outlet::where('id_outlet', '=', $request->id_outlet)->first();
@@ -129,16 +151,19 @@ class TransaksiController extends Controller
                 'id_outlet' => $request->id_outlet,
                 'id_pengiriman' => $pengiriman->id_pengiriman,
                 'id_pegawai' => $request->id_pegawai,
+                'id_konsumen' => $request->id_konsumen,
                 'jumlah_barang' => $request->jumlah_barang,
                 'total_harga' => $total,
                 'metode_bayar' => $request->metode_bayar,
                 'keterangan' => $request->keterangan,
                 'tgl_transaksi' => $request->tgl_transaksi,
             ]);
+            $stok = Stok::where('id_barang', $request->id_barang)->first();
+            $stok->update([
+                "jumlah_stok" => $stok->jumlah_stok - $request->jumlah_barang,
+            ]);
+            return redirect("transaksi")->with("message", "Data berhasil disimpan");
         }
-
-
-        return redirect("transaksi")->with("message", "Data berhasil disimpan");
     }
 
     /**
@@ -178,6 +203,7 @@ class TransaksiController extends Controller
             $data["pegawaiSaatIni"] = Pegawai::find($transaksi->id_pegawai);
             $data["pegawai"] = Pegawai::all();
             $data['pengiriman'] = Pengiriman::where('id_pengiriman', '=', $transaksi->id_pengiriman)->first();
+            $data["konsumen"] = Konsumen::all();
             return view('transaksi/edit-transaksi', compact('transaksi'), $data);
         }
     }
@@ -195,6 +221,7 @@ class TransaksiController extends Controller
             'id_barang' => 'required',
             'id_outlet' => 'required',
             'id_pegawai' => 'required',
+            'id_konsumen' => 'required',
             'tujuan' => 'required',
             'jumlah_barang' => 'required',
             'ongkos_kirim' => 'required',
@@ -222,6 +249,7 @@ class TransaksiController extends Controller
                 'id_outlet' => $request->id_outlet,
                 'id_pengiriman' => $pengiriman->id_pengiriman,
                 'id_pegawai' => $request->id_pegawai,
+                'id_konsumen' => $request->id_konsumen,
                 'jumlah_barang' => $request->jumlah_barang,
                 'total_harga' => $total,
                 'metode_bayar' => $request->metode_bayar,
@@ -243,6 +271,7 @@ class TransaksiController extends Controller
                 'id_outlet' => $request->id_outlet,
                 'id_pengiriman' => $pengiriman->id_pengiriman,
                 'id_pegawai' => $request->id_pegawai,
+                'id_konsumen' => $request->id_konsumen,
                 'jumlah_barang' => $request->jumlah_barang,
                 'total_harga' => $total,
                 'metode_bayar' => $request->metode_bayar,
@@ -292,11 +321,69 @@ class TransaksiController extends Controller
     {
         $barang = Barang::find($id);
         $outlet = Outlet::all();
+        $order = Transaksi::latest()->select('transaksi.order_number')->first();
         $pegawai = Pegawai::join('pengguna', 'pengguna.id_pengguna', '=', 'pegawai.id_pengguna')
             ->where('role', '!=', 4)
             ->select('pegawai.*', 'pengguna.role', 'pengguna.nama as nama_role')
             ->get();
         // echo $barang; die;
-        return view('transaksi.transaksi-user', compact('barang', 'pegawai', 'outlet'));
+        return view('transaksi.transaksi-user', compact('barang', 'pegawai', 'outlet', 'order'));
+    }
+
+    public function upBukti()
+    {
+        return view('transaksi.view-up-bukti');
+    }
+
+    public function cariTrx(Request $request)
+    {
+        $request->validate([
+            'id_transaksi' => 'required',
+        ]);
+        $transaksi = Transaksi::where('id_transaksi', $request->id_transaksi)->first();
+        // echo $transaksi; die;
+        if ($transaksi->status_code == 1) {
+            return redirect('upbukti')->with('message', 'Bukti Bayar untuk ID ini telah Divalidasi');
+        } else {
+            return redirect('transaksi/upload-bukti/' . $request->id_transaksi);
+        }
+        // echo $transaksi; die;
+    }
+
+    public function uploadBukti($id)
+    {
+
+        $transaksi = Transaksi::where('id_transaksi', $id)->first();
+        // echo $transaksi; die;
+        return view('transaksi.transfer-bukti', compact('transaksi'));
+    }
+
+    public function storeBukti(Request $request, $id)
+    {
+        $transaksi = Transaksi::where('id_transaksi', $id)->first();
+        $image = $request->file('image');
+        $image->storeAs('public/foto-bukti-bayar', $image->hashName());
+        $transaksi->update([
+            'bukti_bayar' => $image->hashName(),
+            'status' => 'Bukti Bayar telah Diupload',
+        ]);
+
+        return redirect("transaksi")->with("message", "Upload Bukti Bayar Berhasil");
+    }
+
+    public function validasiBukti($id)
+    {
+        $transaksi = Transaksi::where('id_transaksi', $id)->first();
+        $pengiriman = Pengiriman::where('id_pengiriman', $transaksi->id_pengiriman)->first();
+        $transaksi->update([
+            'status' => 'Bukti Bayar Tervalidasi',
+            'status_code' => 1,
+        ]);
+
+        $pengiriman->update([
+            'status' => 'Diproses',
+        ]);
+
+        return redirect("transaksi")->with("message", "Bukti Bayar Tervalidasi");
     }
 }
