@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jun 2023 pada 12.11
+-- Waktu pembuatan: 24 Jun 2023 pada 13.54
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
@@ -119,7 +119,7 @@ CREATE TABLE `konsumen` (
 --
 
 INSERT INTO `konsumen` (`id_konsumen`, `id_pengguna`, `nama`, `alamat`, `no_hp`, `email`, `username`, `password`, `foto`, `created_at`, `updated_at`) VALUES
-('9978740e-2d69-4fe5-ab4d-497ee4aa895b', '99764f27-8177-4e99-b466-08f0dd0765e7', 'Kevin', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', '085790291176', 'syahrulhidayat342@gmail.com', 'user', '202cb962ac59075b964b07152d234b70', 'WbCb7JS0iaOrG28GDDuULnhxm9GvgOzcgbakZtyA.jpg', '2023-06-22 09:30:22', '2023-06-22 09:58:17');
+('9978740e-2d69-4fe5-ab4d-497ee4aa895b', '99764f27-8177-4e99-b466-08f0dd0765e7', 'Azam', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', '085790291176', 'syahrulhidayat342@gmail.com', 'user', '202cb962ac59075b964b07152d234b70', 'WbCb7JS0iaOrG28GDDuULnhxm9GvgOzcgbakZtyA.jpg', '2023-06-22 09:30:22', '2023-06-22 09:58:17');
 
 -- --------------------------------------------------------
 
@@ -241,10 +241,8 @@ CREATE TABLE `pengiriman` (
 --
 
 INSERT INTO `pengiriman` (`id_pengiriman`, `id_barang`, `asal`, `tujuan`, `ongkos_kirim`, `metode_pengiriman`, `tipe_pengiriman`, `tgl_pengiriman`, `tgl_diterima`, `status`, `created_at`, `updated_at`) VALUES
-('9953b63f-a6c8-48b8-bf0b-83acf85e9332', '9953b211-68c9-4b20-92ee-249c525c018f', 'Kampus', 'Rumah Farish, Jalan Sungai Besar, Kaltim', 10000, 'Instant', 'Pengiriman Barang ke Customer', '2023-05-31 17:00:00', NULL, 'Disiapkan', '2023-06-04 03:09:49', '2023-06-04 03:10:25'),
-('997678f6-a96b-46b8-9359-e42308f5e34c', '9953b211-68c9-4b20-92ee-249c525c018f', 'Kampus', 'Rumah Farish, Jalan Sungai Besar, Kaltim', 15000, 'Instant', 'Pengiriman Barang ke Customer', '2023-06-20 17:00:00', NULL, 'Pengiriman', '2023-06-21 09:52:26', '2023-06-21 09:52:26'),
-('99767915-bd06-46bf-b99c-331ec38e202e', '9953b211-68c9-4b20-92ee-249c525c018f', 'Kampus', 'Rumah Farish, Jalan Sungai Besar, Kaltim', 15000, 'Instant', 'Pengiriman Barang ke Customer', '2023-06-20 17:00:00', NULL, 'Pengiriman', '2023-06-21 09:52:46', '2023-06-21 09:52:46'),
-('99767a1b-853f-4048-a269-35c7081a5589', '9953b211-68c9-4b20-92ee-249c525c018f', 'Kampus', 'Rumah Farish, Jalan Sungai Besar, Kaltim', 15000, 'Instant', 'Pengiriman Barang ke Customer', '2023-06-20 17:00:00', NULL, 'Pengiriman', '2023-06-21 09:55:38', '2023-06-21 09:55:38');
+('997c9206-fa7f-4aae-81b2-8d90e14953b5', '9953b211-68c9-4b20-92ee-249c525c018f', 'Kampus', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', 10000, 'Reguler', 'Pengiriman Barang ke Customer', '2023-06-23 17:00:00', NULL, 'Diproses', '2023-06-24 10:37:29', '2023-06-24 10:42:41'),
+('997ca265-8a27-43f7-9f44-d61732bbe313', '9953b211-68c9-4b20-92ee-249c525c018f', 'Kampus', 'Jalan Titan III No. 24, Purwantoro, Kec. Blimbing, Malang, Jawa Timur, 65122', 15000, 'Instant', 'Pengiriman Barang ke Customer', '2023-06-23 17:00:00', NULL, 'Diproses', '2023-06-24 11:23:15', '2023-06-24 11:34:06');
 
 -- --------------------------------------------------------
 
@@ -267,7 +265,7 @@ CREATE TABLE `stok_barang` (
 --
 
 INSERT INTO `stok_barang` (`id_stok_barang`, `id_barang`, `jumlah_stok`, `satuan`, `tgl_dibuat`, `created_at`, `updated_at`) VALUES
-('9953b234-571a-4119-8f3e-0905818b8a09', '9953b211-68c9-4b20-92ee-249c525c018f', 100, 'Pcs', '2023-06-05 00:00:00', '2023-06-04 02:58:31', '2023-06-04 02:58:42');
+('9953b234-571a-4119-8f3e-0905818b8a09', '9953b211-68c9-4b20-92ee-249c525c018f', 75, 'Pcs', '2023-06-05 00:00:00', '2023-06-04 02:58:31', '2023-06-24 11:23:15');
 
 -- --------------------------------------------------------
 
@@ -300,12 +298,16 @@ CREATE TABLE `transaksi` (
   `id_pengiriman` char(36) DEFAULT NULL,
   `id_barang` char(36) NOT NULL,
   `id_pegawai` char(36) NOT NULL,
+  `id_konsumen` char(36) NOT NULL,
   `order_number` int(11) NOT NULL,
   `jumlah_barang` int(11) NOT NULL,
   `total_harga` int(11) NOT NULL,
   `metode_bayar` varchar(255) NOT NULL,
-  `keterangan` varchar(255) NOT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
   `tgl_transaksi` timestamp NULL DEFAULT NULL,
+  `status` varchar(255) NOT NULL,
+  `status_code` int(11) NOT NULL DEFAULT 0,
+  `bukti_bayar` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -314,8 +316,9 @@ CREATE TABLE `transaksi` (
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_transaksi`, `id_outlet`, `id_pengiriman`, `id_barang`, `id_pegawai`, `order_number`, `jumlah_barang`, `total_harga`, `metode_bayar`, `keterangan`, `tgl_transaksi`, `created_at`, `updated_at`) VALUES
-('99767a1b-8969-4c07-be69-08be27d0abe7', '9953b3df-7c47-4b19-9a7c-d781b995419d', '99767a1b-853f-4048-a269-35c7081a5589', '9953b211-68c9-4b20-92ee-249c525c018f', '9953b04a-fd32-4174-b67e-1c248c24389a', 4, 10, 3000000, 'Gopay', '-', '2023-06-20 17:00:00', '2023-06-21 09:55:38', '2023-06-21 09:55:38');
+INSERT INTO `transaksi` (`id_transaksi`, `id_outlet`, `id_pengiriman`, `id_barang`, `id_pegawai`, `id_konsumen`, `order_number`, `jumlah_barang`, `total_harga`, `metode_bayar`, `keterangan`, `tgl_transaksi`, `status`, `status_code`, `bukti_bayar`, `created_at`, `updated_at`) VALUES
+('997c9206-fe9b-499d-b80b-c12f28f2e4eb', '9953b3df-7c47-4b19-9a7c-d781b995419d', '997c9206-fa7f-4aae-81b2-8d90e14953b5', '9953b211-68c9-4b20-92ee-249c525c018f', '9953b04a-fd32-4174-b67e-1c248c24389a', '9978740e-2d69-4fe5-ab4d-497ee4aa895b', 1, 5, 1500000, 'Transfer Bank', NULL, '2023-06-23 17:00:00', 'Bukti Bayar telah Diupload', 1, 'iKxbqdM1ejyDEEvbgo9Ko5FunslLbpFc43HKsitf.jpg', '2023-06-24 10:37:29', '2023-06-24 11:32:11'),
+('997ca265-8ef8-46ab-bd3d-432e19f7bf20', '9953b3df-7c47-4b19-9a7c-d781b995419d', '997ca265-8a27-43f7-9f44-d61732bbe313', '9953b211-68c9-4b20-92ee-249c525c018f', '9953b04a-fd32-4174-b67e-1c248c24389a', '9978740e-2d69-4fe5-ab4d-497ee4aa895b', 6, 10, 3000000, 'Transfer Bank', NULL, '2023-06-23 17:00:00', 'Bukti Bayar Tervalidasi', 1, '2wTz1Tz1I3NAzsXLvhWgjFAlydPA6c1tzWcl7gUD.jpg', '2023-06-24 11:23:15', '2023-06-24 11:34:06');
 
 --
 -- Indexes for dumped tables
@@ -406,7 +409,8 @@ ALTER TABLE `transaksi`
   ADD KEY `id_outlet` (`id_outlet`),
   ADD KEY `id_pengiriman` (`id_pengiriman`),
   ADD KEY `id_barang` (`id_barang`),
-  ADD KEY `id_pegawai` (`id_pegawai`);
+  ADD KEY `id_pegawai` (`id_pegawai`),
+  ADD KEY `id_konsumen` (`id_konsumen`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -416,13 +420,13 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT untuk tabel `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `role` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `role` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `order_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -479,7 +483,8 @@ ALTER TABLE `transaksi`
   ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_outlet`) REFERENCES `outlet` (`id_outlet`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_pengiriman`) REFERENCES `pengiriman` (`id_pengiriman`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `transaksi_ibfk_4` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `transaksi_ibfk_4` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id_pegawai`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_5` FOREIGN KEY (`id_konsumen`) REFERENCES `konsumen` (`id_konsumen`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
