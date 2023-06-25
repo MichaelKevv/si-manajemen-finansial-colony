@@ -338,8 +338,14 @@
                                                 {{ $pgw->total_harga + $pgw->ongkos_kirim }}</p>
                                         </td>
                                         <td>
+                                            <?php if($pgw->tgl_transaksi != null): ?>
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ tanggal_local($pgw->tgl_transaksi) }}</p>
+                                                {{ date('d F Y', strtotime($pgw->tgl_transaksi)) }}</p>
+                                            <?php else: ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                Kosong
+                                            </p>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 @endforeach

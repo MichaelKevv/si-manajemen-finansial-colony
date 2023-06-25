@@ -81,12 +81,27 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->harga }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_masuk) }}
+                                            <?php if($pgw->tgl_masuk != null): ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ date('d F Y', strtotime($pgw->tgl_masuk)) }}
                                             </p>
+                                            <?php else: ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                Kosong
+                                            </p>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_keluar) }}
+                                            <?php if($pgw->tgl_keluar != null): ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ date('d F Y', strtotime($pgw->tgl_keluar)) }}
                                             </p>
+                                            <?php else: ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                Kosong
+                                            </p>
+                                            <?php endif; ?>
+
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->status }}</p>

@@ -82,7 +82,7 @@
                                         <td>
                                             <?php if($pgw->tgl_pengiriman != null): ?>
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ tanggal_local($pgw->tgl_pengiriman) }}
+                                                {{ date('d F Y', strtotime($pgw->tgl_pengiriman)) }}
                                             </p>
                                             <?php else : ?>
                                             <p class="text-xs font-weight-bold mb-0">
@@ -93,7 +93,7 @@
                                         <td>
                                             <?php if($pgw->tgl_diterima != null): ?>
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ tanggal_local($pgw->tgl_diterima) }}
+                                                {{ date('d F Y', strtotime($pgw->tgl_diterima)) }}
                                             </p>
                                             <?php else : ?>
                                             <p class="text-xs font-weight-bold mb-0">

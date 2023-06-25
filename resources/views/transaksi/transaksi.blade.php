@@ -92,7 +92,8 @@
                                         </td>
                                         <?php else: ?>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->nama_konsumen }} - {{ $pgw->tujuan }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $pgw->nama_konsumen }} -
+                                                {{ $pgw->tujuan }}</p>
                                         </td>
                                         <?php endif; ?>
                                         <td>
@@ -115,8 +116,14 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->status }}</p>
                                         </td>
                                         <td>
+                                            <?php if($pgw->tgl_transaksi != null): ?>
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ tanggal_local($pgw->tgl_transaksi) }}</p>
+                                                {{ date('d F Y', strtotime($pgw->tgl_transaksi)) }}</p>
+                                            <?php else: ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                Kosong
+                                            </p>
+                                            <?php endif; ?>
                                         </td>
                                         <?php if (Session::get('pegawai')->role == 1 || Session::get('pegawai')->role == 2 || Session::get('pegawai')->role == 3): ?>
                                         <td class="align-middle">

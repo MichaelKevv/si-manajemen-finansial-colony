@@ -74,7 +74,15 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->status }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_mutasi) }}</p>
+                                            <?php if($pgw->tgl_mutasi != null): ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ date('d F Y', strtotime($pgw->tgl_mutasi)) }}</p>
+                                            <?php else: ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                Kosong
+                                            </p>
+                                            <?php endif; ?>
+
                                         </td>
                                         <td class="align-middle">
                                             <form action="{{ route('mutasi.destroy', $pgw->id_mutasi) }}" method="POST">

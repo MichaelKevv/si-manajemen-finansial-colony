@@ -55,7 +55,14 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $pgw->satuan }} </p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ tanggal_local($pgw->tgl_dibuat) }} </p>
+                                            <?php if($pgw->tgl_dibuat != null): ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ date('d F Y', strtotime($pgw->tgl_dibuat)) }} </p>
+                                            <?php else: ?>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                Kosong
+                                            </p>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="align-middle">
                                             <form action="{{ route('stok.destroy', $pgw->id_stok_barang) }}" method="POST">
